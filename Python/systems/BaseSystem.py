@@ -41,23 +41,11 @@ class BaseSystem:
         num_points = len(x)
         fx = self.map_points(x)
 
-        #m0 = time.time()
-        #sbs_fx = SpreadBoxSearch(fx, x)
-        #for i in range(num_points):
-        #    #which = BaseSystem.closest_point(x[i], fx)
-        #    which = sbs_fx.get_closest_point(x[i])
-        #    #assert which == which2
-        #    for j in range(self.dimension):
-        #        dif = x[i][j] - fx[which][j]
-        #        ret += dif * dif
-        #m1 = time.time()
-        #sbs_fx = SpreadBoxSearch(fx, x)
         for i in range(num_points):
             which = BaseSystem.closest_point(x[i], fx)
             for j in range(self.dimension):
                 dif = x[i][j] - fx[which][j]
                 ret += dif * dif
-        #m2 = time.time()
 
         for i in range(num_points):
             which = BaseSystem.closest_point(fx[i], x)

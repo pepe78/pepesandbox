@@ -22,23 +22,8 @@ class Box:
 
     def insert_point(self, point, point_index, list_to_process):
         self.already_processed_index[point_index] = True
-
-        min_dist = 0
-        for i in range(len(self.borders)):
-            if point[i] < self.borders[i][0]:
-                qq = self.borders[i][0]-point[i]
-                min_dist += qq * qq
-            else:
-                if point[i] > self.borders[i][1]:
-                    qq = self.borders[i][1] - point[i]
-                    min_dist += qq * qq
-
-        max_dist = -sys.float_info.max
-        for i in range(len(self.corners)):
-            tmp_max = BaseSearch.get_distance(point, self.corners[i])
-            if tmp_max > max_dist:
-                max_dist = tmp_max
-
+        min_dist = self.get_min_dist(point)
+        max_dist = self.get_max_dist(point)
         if (len(self.active_points) == 0) or (min_dist <= self.max_dist_all * 1.0001):
             if self.max_dist_all > max_dist:
                 self.max_dist_all = max_dist
@@ -50,6 +35,26 @@ class Box:
             for neighbour in self.neighbours:
                 if point_index not in neighbour.already_processed_index:
                     list_to_process.append([point_index, neighbour])
+
+    def get_max_dist(self, point):
+        max_dist = -sys.float_info.max
+        for i in range(len(self.corners)):
+            tmp_max = BaseSearch.get_distance(point, self.corners[i])
+            if tmp_max > max_dist:
+                max_dist = tmp_max
+        return max_dist
+
+    def get_min_dist(self, point):
+        min_dist = 0
+        for i in range(len(self.borders)):
+            if point[i] < self.borders[i][0]:
+                qq = self.borders[i][0] - point[i]
+                min_dist += qq * qq
+            else:
+                if point[i] > self.borders[i][1]:
+                    qq = self.borders[i][1] - point[i]
+                    min_dist += qq * qq
+        return min_dist
 
     @staticmethod
     def find_position(val, active_points, s_pos, e_pos):
