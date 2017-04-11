@@ -39,20 +39,27 @@ class Box:
             if tmp_max > max_dist:
                 max_dist = tmp_max
 
-        if (len(self.active_points) == 0) or (min_dist <= self.max_dist_all * 1.001):
+        if (len(self.active_points) == 0) or (min_dist <= self.max_dist_all * 1.0001):
             if self.max_dist_all > max_dist:
                 self.max_dist_all = max_dist
-            where = 0
-            while where < len(self.active_points):
-                if min_dist < self.active_points[where][1]:
-                    break
-                where += 1
+            where = Box.find_position(min_dist, self.active_points, 0, len(self.active_points))
             self.active_points.insert(where, [point_index, min_dist, max_dist])
             if where == 0:
-                for i in range(1, len(self.active_points)):
-                    if self.active_points[i][1] > self.max_dist_all * 1.001:
-                        self.active_points = self.active_points[0:i]
-                        break
+                upto = Box.find_position(self.max_dist_all * 1.0001, self.active_points, 0, len(self.active_points))
+                self.active_points = self.active_points[0:upto]
             for neighbour in self.neighbours:
                 if point_index not in neighbour.already_processed_index:
                     list_to_process.append([point_index, neighbour])
+
+    @staticmethod
+    def find_position(val, active_points, s_pos, e_pos):
+        if s_pos == e_pos:
+            return s_pos
+        m_pos = (s_pos + e_pos) // 2
+        if m_pos == s_pos:
+            if val < active_points[m_pos][1]:
+                return m_pos
+            return m_pos + 1
+        if val < active_points[m_pos][1]:
+            return Box.find_position(val, active_points, s_pos, m_pos)
+        return Box.find_position(val, active_points, m_pos, e_pos)
