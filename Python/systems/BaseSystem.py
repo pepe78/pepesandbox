@@ -1,5 +1,7 @@
 import sys
 
+from iMath.Search.SearchUsingAllAlgs import SearchUsingAllAlgs
+
 
 class BaseSystem:
     param = 1
@@ -41,14 +43,16 @@ class BaseSystem:
         num_points = len(x)
         fx = self.map_points(x)
 
+        res = SearchUsingAllAlgs.get_best_indexes(x, fx)
         for i in range(num_points):
-            which = BaseSystem.closest_point(x[i], fx)
+            which = res[i]
             for j in range(self.dimension):
                 dif = x[i][j] - fx[which][j]
                 ret += dif * dif
 
+        res = SearchUsingAllAlgs.get_best_indexes(fx, x)
         for i in range(num_points):
-            which = BaseSystem.closest_point(fx[i], x)
+            which = res[i]
             for j in range(self.dimension):
                 dif = x[which][j] - fx[i][j]
                 ret += dif * dif
@@ -64,16 +68,18 @@ class BaseSystem:
         fx = self.map_points(x)
         dx = self.get_partials(x)
 
+        res = SearchUsingAllAlgs.get_best_indexes(x, fx)
         for i in range(num_points):
-            which = BaseSystem.closest_point(x[i], fx)
+            which = res[i]
             for j in range(self.dimension):
                 dif = x[i][j] - fx[which][j]
                 ret[i][j] += dif * 2.0
                 for k in range(self.dimension):
                     ret[which][k] -= dif * dx[which][j][k] * 2.0
 
+        res = SearchUsingAllAlgs.get_best_indexes(fx, x)
         for i in range(num_points):
-            which = BaseSystem.closest_point(fx[i], x)
+            which = res[i]
             for j in range(self.dimension):
                 dif = x[which][j] - fx[i][j]
                 ret[which][j] += dif * 2.0

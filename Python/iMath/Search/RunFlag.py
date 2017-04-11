@@ -1,0 +1,2 @@
+class RunFlag:
+    shouldRun = True

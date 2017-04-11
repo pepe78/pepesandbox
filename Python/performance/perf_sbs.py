@@ -4,6 +4,12 @@ import matplotlib.pyplot as plt
 from iMath.PointsGenerator import generate_points
 from iMath.Search.BaseSearch import BaseSearch
 from iMath.Search.SpreadBoxSearch.SpreadBoxSearch import SpreadBoxSearch
+from iMath.Search.SearchUsingAllAlgs import SearchUsingAllAlgs
+
+points1 = generate_points(1000, 2)
+points2 = generate_points(1000, 2)
+ret = SearchUsingAllAlgs.get_best_indexes(points1, points2)
+print(SearchUsingAllAlgs.bs_wins, SearchUsingAllAlgs.sbs_wins)
 
 np = [i for i in range(100,6001,200)]
 rt1 = [0 for i in range(len(np))]
