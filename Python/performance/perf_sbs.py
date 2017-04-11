@@ -5,7 +5,7 @@ from iMath.PointsGenerator import generate_points
 from iMath.Search.BaseSearch import BaseSearch
 from iMath.Search.SpreadBoxSearch.SpreadBoxSearch import SpreadBoxSearch
 
-np = [i for i in range(100,2001,200)]
+np = [i for i in range(100,6001,200)]
 rt1 = [0 for i in range(len(np))]
 rt2 = [0 for i in range(len(np))]
 for i in range(len(np)):
@@ -34,4 +34,7 @@ for i in range(len(np)):
 
 plt.plot(np, rt1, 'b')
 plt.plot(np, rt2, 'g')
+plt.show()
+
+plt.plot(np, rt2)
 plt.show()

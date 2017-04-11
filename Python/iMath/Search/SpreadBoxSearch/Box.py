@@ -10,6 +10,7 @@ class Box:
     active_points = None
     neighbours = None
     max_dist_all = sys.float_info.max
+    allow_minor_numerical_inaccuracy = 1.0001
 
     def __init__(self):
         self.already_processed_index = {}
@@ -24,13 +25,18 @@ class Box:
         self.already_processed_index[point_index] = True
         min_dist = self.get_min_dist(point)
         max_dist = self.get_max_dist(point)
-        if (len(self.active_points) == 0) or (min_dist <= self.max_dist_all * 1.0001):
+        if (len(self.active_points) == 0) or \
+                (min_dist <= self.max_dist_all * self.allow_minor_numerical_inaccuracy):
             if self.max_dist_all > max_dist:
                 self.max_dist_all = max_dist
             where = Box.find_position(min_dist, self.active_points, 0, len(self.active_points))
             self.active_points.insert(where, [point_index, min_dist, max_dist])
             if where == 0:
-                upto = Box.find_position(self.max_dist_all * 1.0001, self.active_points, 0, len(self.active_points))
+                upto = Box.find_position(
+                    self.max_dist_all * self.allow_minor_numerical_inaccuracy,
+                    self.active_points,
+                    0,
+                    len(self.active_points))
                 self.active_points = self.active_points[0:upto]
             for neighbour in self.neighbours:
                 if point_index not in neighbour.already_processed_index:
