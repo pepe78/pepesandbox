@@ -61,7 +61,7 @@ class BaseSystem:
                 dif = x[i][j] - fx[which][j]
                 ret += dif * dif
         #m2 = time.time()
-        
+
         for i in range(num_points):
             which = BaseSystem.closest_point(fx[i], x)
             for j in range(self.dimension):
