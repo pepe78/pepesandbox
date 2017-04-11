@@ -48,6 +48,7 @@ Temporary Items
 Python/.idea/misc.xml
 Python/.idea/modules.xml
 Python/.idea/Python.iml
+Python/.idea/vcs.xml
 Python/.idea/workspace.xml
 Python/iMath/__pycache__/Bracketing.cpython-36.pyc
 Python/iMath/__pycache__/JG.cpython-36.pyc
@@ -56,3 +57,12 @@ Python/iMath/__pycache__/LMBFGS.cpython-36.pyc
 Python/iMath/__pycache__/PointsGenerator.cpython-36.pyc
 Python/systems/__pycache__/BaseSystem.cpython-36.pyc
 Python/systems/__pycache__/System2dHenon.cpython-36.pyc
+.idea/misc.xml
+.idea/modules.xml
+.idea/PepeSandBox.iml
+.idea/vcs.xml
+.idea/workspace.xml
+Python/iMath/SpreadBoxSearch/__pycache__/Box.cpython-36.pyc
+Python/iMath/SpreadBoxSearch/__pycache__/SpreadBoxSearch.cpython-36.pyc
+Python/.idea/vcs.xml
+Python/iMath/SpreadBoxSearch/Box.py
