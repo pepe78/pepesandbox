@@ -6,7 +6,7 @@ from iMath.JG import JungeKevrekidis
 
 system = System2dHenon()
 
-num_points = 100
+num_points = 1000
 points = generate_points(num_points, system.get_dimension(), -2.0, 2.0)
 points = JungeKevrekidis(system, points)
 
@@ -17,4 +17,3 @@ for i in range(len(points)):
     y.append(points[i][1])
 plt.plot(x, y, 'bo', markersize=0.3)
 plt.show()
-
