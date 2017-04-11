@@ -5,11 +5,12 @@ from iMath.PointsGenerator import generate_points
 from iMath.Search.BaseSearch import BaseSearch
 from iMath.Search.SpreadBoxSearch.SpreadBoxSearch import SpreadBoxSearch
 
-np = [i for i in range(100,1001,100)]
+np = [i for i in range(100,2001,200)]
 rt1 = [0 for i in range(len(np))]
 rt2 = [0 for i in range(len(np))]
 for i in range(len(np)):
     for repeat in range(10):
+        print("Doing {0} {1}".format(np[i], repeat))
         points1 = generate_points(np[i], 2)
         points2 = generate_points(np[i], 2)
 

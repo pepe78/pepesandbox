@@ -20,10 +20,7 @@ class Box:
         self.neighbours = neighbours
         self.borders = borders
 
-    def insert_point(self, point, point_index, force=True):
-        if force:
-            if point_index in self.already_processed_index:
-                return
+    def insert_point(self, point, point_index, list_to_process):
         self.already_processed_index[point_index] = True
 
         min_dist = 0
@@ -42,7 +39,7 @@ class Box:
             if tmp_max > max_dist:
                 max_dist = tmp_max
 
-        if (len(self.active_points) == 0) or (min_dist <= self.max_dist_all * 1.01):
+        if (len(self.active_points) == 0) or (min_dist <= self.max_dist_all * 1.001):
             if self.max_dist_all > max_dist:
                 self.max_dist_all = max_dist
             where = 0
@@ -53,8 +50,9 @@ class Box:
             self.active_points.insert(where, [point_index, min_dist, max_dist])
             if where == 0:
                 for i in range(1, len(self.active_points)):
-                    if self.active_points[i][1] > self.max_dist_all * 1.01:
+                    if self.active_points[i][1] > self.max_dist_all * 1.001:
                         self.active_points = self.active_points[0:i]
                         break
             for neighbour in self.neighbours:
-                neighbour.insert_point(point, point_index)
+                if point_index not in neighbour.already_processed_index:
+                    list_to_process.append([point_index, neighbour])

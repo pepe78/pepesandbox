@@ -38,10 +38,19 @@ class SpreadBoxSearch(BaseSearch):
             borders = self.get_borders(pv)
             self.boxes[i].set(corners, neighbours, borders)
 
+        list_to_process = []
         for i in range(len(points)):
             point_vector = self.get_point_vector(points[i])
             point_index = self.get_point_index(point_vector)
-            self.boxes[point_index].insert_point(points[i], i)
+            list_to_process.append([i, self.boxes[point_index]])
+
+        new_list_to_process = []
+        while len(list_to_process) != 0:
+            for pr in list_to_process:
+                pr[1].insert_point(points[pr[0]], pr[0], new_list_to_process)
+
+            list_to_process = new_list_to_process
+            new_list_to_process = []
 
     def get_borders(self, pv):
         ret = [[] for i in range(len(pv))]
