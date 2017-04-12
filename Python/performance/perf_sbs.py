@@ -4,21 +4,32 @@ import matplotlib.pyplot as plt
 from iMath.PointsGenerator import generate_points
 from iMath.Search.BaseSearch import BaseSearch
 from iMath.Search.SpreadBoxSearch.SpreadBoxSearch import SpreadBoxSearch
-from iMath.Search.SearchUsingAllAlgs import SearchUsingAllAlgs
+# from iMath.Search.SearchUsingAllAlgs import SearchUsingAllAlgs
 
-points1 = generate_points(1000, 2)
-points2 = generate_points(1000, 2)
-ret = SearchUsingAllAlgs.get_best_indexes(points1, points2)
-print(SearchUsingAllAlgs.bs_wins, SearchUsingAllAlgs.sbs_wins)
+# points1 = generate_points(1000, 2)
+# points2 = generate_points(1000, 2)
+# ret = SearchUsingAllAlgs.get_best_indexes(points1, points2)
+# print(SearchUsingAllAlgs.bs_wins, SearchUsingAllAlgs.sbs_wins)
 
-np = [i for i in range(100,6001,200)]
+dimension = 2
+num_experiments = 10
+np = [i for i in range(100,1001,200)]
+
+# dimension = 3
+# num_experiments = 1
+# np = [27000]
+# for 3-dimensional experiment - works even for higher dimension,
+# but to see speed up - need to go to longer lists
+# 950s for BS
+# 220s for SBS
+
 rt1 = [0 for i in range(len(np))]
 rt2 = [0 for i in range(len(np))]
 for i in range(len(np)):
-    for repeat in range(10):
+    for repeat in range(num_experiments):
         print("Doing {0} {1}".format(np[i], repeat))
-        points1 = generate_points(np[i], 2)
-        points2 = generate_points(np[i], 2)
+        points1 = generate_points(np[i], dimension)
+        points2 = generate_points(np[i], dimension)
 
         t0 = time.time()
 
@@ -32,12 +43,15 @@ for i in range(len(np)):
 
         t2 = time.time()
 
-        rt1[i] += (t1-t0)/10.0
-        rt2[i] += (t2-t1)/10.0
+        rt1[i] += (t1-t0)/num_experiments
+        rt2[i] += (t2-t1)/num_experiments
 
         for j in range(len(r1)):
             assert r1[j] == r2[j]
 
+print(np)
+print(rt1)
+print(rt2)
 plt.plot(np, rt1, 'b')
 plt.plot(np, rt2, 'g')
 plt.show()
