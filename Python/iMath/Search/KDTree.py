@@ -1,3 +1,5 @@
+import sys
+
 from iMath.Search.BaseSearch import BaseSearch
 
 
@@ -29,6 +31,9 @@ class KDTree(BaseSearch):
 
     @staticmethod
     def go_down_and_up(cur_node, point, up_to_depth):
+        best_match = None
+        best_value = sys.float_info.max
+
         dimension = len(point)
         while True:
             if point[cur_node.depth % dimension] < cur_node.location[1][cur_node.depth % dimension]:
@@ -39,9 +44,6 @@ class KDTree(BaseSearch):
                 if cur_node.right is None:
                     break
                 cur_node = cur_node.right
-
-        best_match = cur_node.location
-        best_value = BaseSearch.get_distance(point, best_match[1])
 
         while True:
             tmp_value = BaseSearch.get_distance(point, cur_node.location[1])
