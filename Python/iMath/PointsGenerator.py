@@ -1,16 +1,13 @@
 import random
 
 
-def generate_points(num_points,
-                    dimension,
-                    interval_min=-1.0,
-                    interval_max=1.0):
+def generate_points(num_points, borders):
     random.seed()
 
     ret = []
     for i in range(num_points):
-        tmp = [interval_min + (interval_max - interval_min) * random.random()
-               for j in range(dimension)]
+        tmp = [borders[j][0] + (borders[j][1] - borders[j][0]) * random.random()
+               for j in range(len(borders))]
         ret.append(tmp)
 
     return ret

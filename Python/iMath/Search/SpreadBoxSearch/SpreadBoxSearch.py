@@ -118,6 +118,6 @@ class SpreadBoxSearch(BaseSearch):
         ret = [0 for i in range(self.dimension)]
         for i in range(self.dimension-1, -1, -1):
             ret[i] = point_index % self.num_points
-            point_index = point_index // self.num_points
+            point_index //= self.num_points
 
         return ret
