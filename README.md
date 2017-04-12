@@ -1,5 +1,5 @@
 # PepeSandBox
-* Python [3.6.1]
+* [Python](https://docs.python.org/3/whatsnew/3.6.html) [3.6.1]
   * Finding [Invariant Sets](https://en.wikipedia.org/wiki/Invariant_(mathematics)) ([attractors](https://en.wikipedia.org/wiki/Attractor)) for [Henon Map](https://en.wikipedia.org/wiki/H%C3%A9non_map)
   ![Henon](/images/henon_200.png)
     * [Oliver Junge](https://www-m3.ma.tum.de/Allgemeines/OliverJunge), [Ioannis G. Kevrekidis](http://www.princeton.edu/cbe/people/faculty/kevrekidis/): [On the sighting of unicorns: a variational approach to computing invariant sets in dynamical systems](https://arxiv.org/abs/1610.04843)
