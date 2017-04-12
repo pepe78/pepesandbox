@@ -35,9 +35,8 @@ class SpreadBoxSearch(BaseSearch):
         for i in range(num_all):
             pv = self.get_point_vector_from_index(i)
             neighbours = self.get_neighbours(pv)
-            corners = self.get_corners(pv)
             borders = self.get_borders(pv)
-            self.boxes[i].set(corners, neighbours, borders)
+            self.boxes[i].set(neighbours, borders)
 
         list_to_process = []
         for i in range(len(points)):
@@ -77,24 +76,6 @@ class SpreadBoxSearch(BaseSearch):
                 min_dist = dist
 
         return where
-
-    def get_corners(self, pv, dim = 0):
-        p0 = self.points_min[dim] + pv[dim] * (self.points_max[dim]-self.points_min[dim]) / self.num_points
-        p1 = self.points_min[dim] + (pv[dim] + 1) * (self.points_max[dim] - self.points_min[dim]) / self.num_points
-
-        if dim == len(pv) - 1:
-            return [[p0], [p1]]
-        ret = []
-        tmp = self.get_corners(pv, dim+1)
-        for i in range(len(tmp)):
-            t = list(tmp[i])
-            t.insert(0, p0)
-            ret.append(t)
-            t = list(tmp[i])
-            t.insert(0, p1)
-            ret.append(t)
-
-        return ret
 
     def get_neighbours(self, pv):
         tmp = []
