@@ -11,7 +11,7 @@ class KDTree(BaseSearch):
     def __init__(self, points, depth=0, parent=None):
         if depth == 0:
             points = [[i, points[i]] for i in range(len(points))]
-        dimension = len(points[0][1])
+        dimension = len(points[0])
         self.depth = depth
         self.parent = parent
         points = sorted(points, key=lambda s:s[1][depth%dimension])
