@@ -2,6 +2,9 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 
+# https://opus4.kobv.de/opus4-zib/frontdoor/deliver/index/docId/177/file/SC-95-11.pdf
+# M Dellnitz, A Hohmann
+# A subdivision algorithm for the computation of unstable manifolds and global attractors
 class Subdivision:
     boxes_activeness = None
     borders = None
