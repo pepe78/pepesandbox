@@ -8,7 +8,7 @@ system = System2dHenon()
 
 num_points = 1000
 points = generate_points(num_points, system.get_dimension(), -2.0, 2.0)
-points = JungeKevrekidis(system, points)
+points = JungeKevrekidis(system, points, 200)
 
 x = []
 y = []

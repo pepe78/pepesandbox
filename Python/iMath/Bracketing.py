@@ -9,7 +9,7 @@ class Bracketing:
     def best_step(system, x, dx):
         c1 = 0.0001
         c2 = 0.9
-        a = 32.0
+        a = 1.0
         m = 0
         v = sys.float_info.max
 
