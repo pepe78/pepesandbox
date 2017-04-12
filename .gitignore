@@ -66,3 +66,5 @@ Python/iMath/SpreadBoxSearch/__pycache__/Box.cpython-36.pyc
 Python/iMath/SpreadBoxSearch/__pycache__/SpreadBoxSearch.cpython-36.pyc
 Python/.idea/vcs.xml
 *.pyc
+Python/iMath/Search/__pycache__/KDTree.cpython-36.pyc
+*.pyc
