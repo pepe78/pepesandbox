@@ -33,13 +33,11 @@ class Box:
                     list_to_process.append([point_index, neighbour])
 
     def remove_unnecessary(self):
-        self.active_points = sorted(self.active_points, key=lambda s: s[1])
-        upto = Box.find_position(
-            self.max_dist_all * self.allow_minor_numerical_inaccuracy,
-            self.active_points,
-            0,
-            len(self.active_points))
-        self.active_points = self.active_points[0:upto]
+        new_list = []
+        for ap in self.active_points:
+            if ap[1] < self.max_dist_all:
+                new_list.append(ap)
+        self.active_points = new_list
 
     def get_max_dist(self, point):
         max_dist = 0
@@ -60,15 +58,3 @@ class Box:
                     min_dist += qq * qq
         return min_dist
 
-    @staticmethod
-    def find_position(val, active_points, s_pos, e_pos):
-        if s_pos == e_pos:
-            return s_pos
-        m_pos = (s_pos + e_pos) // 2
-        if m_pos == s_pos:
-            if val < active_points[m_pos][1]:
-                return m_pos
-            return m_pos + 1
-        if val < active_points[m_pos][1]:
-            return Box.find_position(val, active_points, s_pos, m_pos)
-        return Box.find_position(val, active_points, m_pos, e_pos)
