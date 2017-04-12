@@ -4,27 +4,15 @@ import matplotlib.pyplot as plt
 from iMath.PointsGenerator import generate_points
 from iMath.Search.BaseSearch import BaseSearch
 from iMath.Search.SpreadBoxSearch.SpreadBoxSearch import SpreadBoxSearch
-# from iMath.Search.SearchUsingAllAlgs import SearchUsingAllAlgs
-
-# points1 = generate_points(1000, 2)
-# points2 = generate_points(1000, 2)
-# ret = SearchUsingAllAlgs.get_best_indexes(points1, points2)
-# print(SearchUsingAllAlgs.bs_wins, SearchUsingAllAlgs.sbs_wins)
+from iMath.Search.KDTree import KDTree
 
 dimension = 2
 num_experiments = 10
-np = [i for i in range(100,1201,200)]
-
-# dimension = 3
-# num_experiments = 1
-# np = [27000]
-# for 3-dimensional experiment - works even for higher dimension,
-# but to see speed up - need to go to longer lists
-# 950s for BS
-# 220s for SBS
+np = [i for i in range(100,800,200)]
 
 rt1 = [0 for i in range(len(np))]
 rt2 = [0 for i in range(len(np))]
+rt3 = [0 for i in range(len(np))]
 for i in range(len(np)):
     for repeat in range(num_experiments):
         print("Doing {0} {1}".format(np[i], repeat))
@@ -43,18 +31,26 @@ for i in range(len(np)):
 
         t2 = time.time()
 
+        kdt = KDTree(points1)
+        r3 = kdt.get_closest_points(points2)
+
+        t3 = time.time()
+
         rt1[i] += (t1-t0)/num_experiments
         rt2[i] += (t2-t1)/num_experiments
+        rt3[i] += (t3-t2)/num_experiments
 
         for j in range(len(r1)):
             assert r1[j] == r2[j]
+        for j in range(len(r1)):
+            assert r1[j] == r3[j]
 
 print(np)
 print(rt1)
 print(rt2)
+print(rt3)
 plt.plot(np, rt1, 'b')
 plt.plot(np, rt2, 'g')
+plt.plot(np, rt3, 'r')
 plt.show()
 
-plt.plot(np, rt2)
-plt.show()

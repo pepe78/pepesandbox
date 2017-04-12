@@ -1,6 +1,6 @@
 import sys
 
-from iMath.Search.SearchUsingAllAlgs import SearchUsingAllAlgs
+from iMath.Search.KDTree import KDTree
 
 
 class BaseSystem:
@@ -43,14 +43,16 @@ class BaseSystem:
         num_points = len(x)
         fx = self.map_points(x)
 
-        res = SearchUsingAllAlgs.get_best_indexes(x, fx)
+        kdt = KDTree(fx)
+        res = kdt.get_closest_points(x)
         for i in range(num_points):
             which = res[i]
             for j in range(self.dimension):
                 dif = x[i][j] - fx[which][j]
                 ret += dif * dif
 
-        res = SearchUsingAllAlgs.get_best_indexes(fx, x)
+        kdt = KDTree(x)
+        res = kdt.get_closest_points(fx)
         for i in range(num_points):
             which = res[i]
             for j in range(self.dimension):
@@ -68,7 +70,8 @@ class BaseSystem:
         fx = self.map_points(x)
         dx = self.get_partials(x)
 
-        res = SearchUsingAllAlgs.get_best_indexes(x, fx)
+        kdt = KDTree(fx)
+        res = kdt.get_closest_points(x)
         for i in range(num_points):
             which = res[i]
             for j in range(self.dimension):
@@ -77,7 +80,8 @@ class BaseSystem:
                 for k in range(self.dimension):
                     ret[which][k] -= dif * dx[which][j][k] * 2.0
 
-        res = SearchUsingAllAlgs.get_best_indexes(fx, x)
+        kdt = KDTree(x)
+        res = kdt.get_closest_points(fx)
         for i in range(num_points):
             which = res[i]
             for j in range(self.dimension):
