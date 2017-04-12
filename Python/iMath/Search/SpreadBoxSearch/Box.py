@@ -25,19 +25,21 @@ class Box:
         max_dist = self.get_max_dist(point)
         if (len(self.active_points) == 0) or \
                 (min_dist <= self.max_dist_all * self.allow_minor_numerical_inaccuracy):
-            where = Box.find_position(min_dist, self.active_points, 0, len(self.active_points))
-            self.active_points.insert(where, [point_index, min_dist, max_dist])
+            self.active_points.append([point_index, min_dist, max_dist])
             if self.max_dist_all > max_dist:
                 self.max_dist_all = max_dist
-                upto = Box.find_position(
-                    self.max_dist_all * self.allow_minor_numerical_inaccuracy,
-                    self.active_points,
-                    0,
-                    len(self.active_points))
-                self.active_points = self.active_points[0:upto]
             for neighbour in self.neighbours:
                 if point_index not in neighbour.already_processed_index:
                     list_to_process.append([point_index, neighbour])
+
+    def remove_unnecessary(self):
+        self.active_points = sorted(self.active_points, key=lambda s: s[1])
+        upto = Box.find_position(
+            self.max_dist_all * self.allow_minor_numerical_inaccuracy,
+            self.active_points,
+            0,
+            len(self.active_points))
+        self.active_points = self.active_points[0:upto]
 
     def get_max_dist(self, point):
         max_dist = 0

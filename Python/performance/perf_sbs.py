@@ -13,7 +13,7 @@ from iMath.Search.SpreadBoxSearch.SpreadBoxSearch import SpreadBoxSearch
 
 dimension = 2
 num_experiments = 10
-np = [i for i in range(100,1001,200)]
+np = [i for i in range(100,1201,200)]
 
 # dimension = 3
 # num_experiments = 1

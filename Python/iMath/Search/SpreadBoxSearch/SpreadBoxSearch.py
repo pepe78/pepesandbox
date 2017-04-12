@@ -55,6 +55,9 @@ class SpreadBoxSearch(BaseSearch):
             list_to_process = new_list_to_process
             new_list_to_process = []
 
+        for b in self.boxes:
+            b.remove_unnecessary()
+
     def get_borders(self, pv):
         ret = [[] for i in range(len(pv))]
         for i in range(len(pv)):
