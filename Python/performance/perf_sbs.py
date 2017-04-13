@@ -7,6 +7,7 @@ from iMath.Search.SpreadBoxSearch.SpreadBoxSearch import SpreadBoxSearch
 from iMath.Search.KDTree import KDTree
 
 dimension = 2
+borders = [[-1.0, 1.0] for i in range(dimension)]
 num_experiments = 10
 np = [i for i in range(100,800,200)]
 
@@ -16,8 +17,8 @@ rt3 = [0 for i in range(len(np))]
 for i in range(len(np)):
     for repeat in range(num_experiments):
         print("Doing {0} {1}".format(np[i], repeat))
-        points1 = generate_points(np[i], dimension)
-        points2 = generate_points(np[i], dimension)
+        points1 = generate_points(np[i], borders)
+        points2 = generate_points(np[i], borders)
 
         t0 = time.time()
 
