@@ -7,6 +7,9 @@ class BaseSystem:
     param = 1
     dimension = 1
     borders = []
+    num_jk_steps = 200
+    num_jk_points = 1000
+    num_sub_steps = 7
 
 # for other systems, implement only these methods
 # -----------------------------------------------
