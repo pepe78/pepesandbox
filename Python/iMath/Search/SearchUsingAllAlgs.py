@@ -2,7 +2,6 @@ import threading
 
 from iMath.Search.BaseSearch import BaseSearch
 from iMath.Search.SpreadBoxSearch.SpreadBoxSearch import SpreadBoxSearch
-from iMath.Search.RunFlag import RunFlag
 from iMath.Search.KDTree import KDTree
 
 
@@ -47,7 +46,6 @@ class SearchUsingAllAlgs:
         obj3.vp2 = vp2
         th3 = threading.Thread(target=SearchUsingAllAlgs.get_results_kdt, args=(obj3,))
 
-        RunFlag.shouldRun = True
         th1.start()
         th2.start()
         th3.start()
@@ -63,11 +61,6 @@ class SearchUsingAllAlgs:
                 which = 2
                 break
 
-        RunFlag.shouldRun = False
-        th1.join()
-        th2.join()
-        th3.join()
-        RunFlag.shouldRun = True
         if which == 0:
             SearchUsingAllAlgs.bs_wins += 1
             ret = obj1.ret

@@ -1,7 +1,5 @@
 import sys
 
-from iMath.Search.RunFlag import RunFlag
-
 
 class BaseSearch:
     points = None
@@ -23,8 +21,6 @@ class BaseSearch:
     def get_closest_points(self, points):
         ret = [0 for i in range(len(points))]
         for i in range(len(points)):
-            if not RunFlag.shouldRun:
-                return ret
             ret[i] = self.get_closest_point(points[i])
 
         return ret

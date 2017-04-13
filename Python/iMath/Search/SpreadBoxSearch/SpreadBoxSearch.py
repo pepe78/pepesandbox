@@ -3,7 +3,6 @@ import sys
 
 from iMath.Search.SpreadBoxSearch.Box import Box
 from iMath.Search.BaseSearch import BaseSearch
-from iMath.Search.RunFlag import RunFlag
 
 
 class SpreadBoxSearch(BaseSearch):
@@ -48,8 +47,6 @@ class SpreadBoxSearch(BaseSearch):
         new_list_to_process = {}
         while len(list_to_process) != 0:
             for pr in list_to_process:
-                if not RunFlag.shouldRun:
-                    return
                 for bi in list_to_process[pr]:
                     self.boxes[bi].insert_point(points[pr], pr, new_list_to_process, self.boxes)
 
