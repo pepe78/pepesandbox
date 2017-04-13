@@ -6,7 +6,7 @@ from iMath.LMBFGS import LMBFGS
 # https://arxiv.org/abs/1610.04843
 # Oliver Junge, Ioannis G. Kevrekidis
 # On the sighting of unicorns: a variational approach to computing invariant sets in dynamical systems
-def JungeKevrekidis(system, points, max_rounds=sys.int_info.max):
+def JungeKevrekidis(system, points, max_rounds=sys.maxsize):
     epsilon = 1.0e-10
     num_points = len(points)
     lmbfgs = LMBFGS()
