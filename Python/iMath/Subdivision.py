@@ -43,17 +43,15 @@ class Subdivision:
         print("Plotting started")
 
         if self.system.dimension == 2:
-            current_gca = plt.gca()
+            x = []
+            y = []
             for i in range(len(self.boxes_activeness)):
                 if self.boxes_activeness[i]:
                     position = self.get_position(i, self.num_boxes_per_dimension)
                     box_borders = self.get_box_borders(position)
-                    current_gca.add_patch(
-                        patches.Rectangle((box_borders[0][0], box_borders[1][0]),
-                                          box_borders[0][1] - box_borders[0][0],
-                                          box_borders[1][1] - box_borders[1][0],
-                                          facecolor="red",
-                                          alpha=0.5))
+                    x.append((box_borders[0][0] + box_borders[0][1]) / 2)
+                    y.append((box_borders[1][0] + box_borders[1][1]) / 2)
+            plt.plot(x, y, 'ro', markersize=0.3)
         print("Plotting ended")
 
     def subdivide(self):
