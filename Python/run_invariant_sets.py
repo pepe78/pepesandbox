@@ -15,19 +15,19 @@ from iPlot.iPlot import iPlot
 system = System3dChaoticSaddle()
 
 attractor = Subdivision.do_subdivision(system, system.borders, 9)
+x_attractor = attractor.get_points()
 
 num_points = 1000
 points = generate_points(num_points, system.borders)
-points = JungeKevrekidis(system, points, 1000)
+final_points = JungeKevrekidis(system, points, 1000)
 
-x_attractor = attractor.get_points()
-x = [[] for i in range(system.dimension)]
-for i in range(len(points)):
+x_jk = [[] for i in range(system.dimension)]
+for i in range(len(final_points)):
     for j in range(system.dimension):
-        x[j].append(points[i][j])
+        x_jk[j].append(final_points[i][j])
 
-i_plt = iPlot(len(x))
+i_plt = iPlot(system.dimension)
 i_plt.add_points(x_attractor, 'ro', 0.1)
-i_plt.add_points(x, 'bo', 2.0)
+i_plt.add_points(x_jk, 'bo', 2.0)
 i_plt.show()
 
