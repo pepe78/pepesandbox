@@ -10,7 +10,7 @@ class Subdivision:
     borders = None
     depth = -1
     num_boxes_per_dimension = -1
-    num_test_points_per_dimension = 5
+    num_test_points_per_dimension = 10
     num_all_test_points = -1
     system = None
 
@@ -51,7 +51,7 @@ class Subdivision:
                     box_borders = self.get_box_borders(position)
                     x.append((box_borders[0][0] + box_borders[0][1]) / 2)
                     y.append((box_borders[1][0] + box_borders[1][1]) / 2)
-            plt.plot(x, y, 'ro', markersize=0.3)
+            plt.plot(x, y, 'ro', markersize=0.1)
         print("Plotting ended")
 
     def subdivide(self):

@@ -20,5 +20,5 @@ y = []
 for i in range(len(points)):
     x.append(points[i][0])
     y.append(points[i][1])
-plt.plot(x, y, 'bo', markersize=0.6)
+plt.plot(x, y, 'bo', markersize=2.0)
 plt.show()
