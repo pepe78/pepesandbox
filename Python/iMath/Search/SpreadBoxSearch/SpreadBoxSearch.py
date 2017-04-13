@@ -59,6 +59,13 @@ class SpreadBoxSearch(BaseSearch):
         for b in self.boxes:
             b.remove_unnecessary()
 
+    def get_average_amount_of_active_points_per_box(self):
+        ret = 0
+        for box in self.boxes:
+            ret += len(box.active_points)
+
+        return ret / len(self.boxes)
+
     def get_borders(self, pv):
         ret = [[] for i in range(len(pv))]
         for i in range(len(pv)):
