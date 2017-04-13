@@ -23,7 +23,7 @@ class Box:
         max_dist = self.get_max_dist(point)
         if (len(self.active_points) == 0) or \
                 (min_dist <= self.max_dist_all * self.allow_minor_numerical_inaccuracy):
-            self.active_points.append([point_index, min_dist, max_dist])
+            self.active_points.append([point_index, min_dist])
             if self.max_dist_all > max_dist:
                 self.max_dist_all = max_dist
             for neighbour in self.neighbours:
