@@ -6,12 +6,14 @@ from iMath.Search.KDTree import KDTree
 class BaseSystem:
     param = 1
     dimension = 1
+    borders = []
 
 # for other systems, implement only these methods
 # -----------------------------------------------
     def __init__(self, param):
         self.param = param
         self.dimension = 1
+        self.borders = [[-2.0, 2.0]]
         return
 
     def map_point(self, x):

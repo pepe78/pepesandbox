@@ -1,7 +1,3 @@
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-
-
 # https://opus4.kobv.de/opus4-zib/frontdoor/deliver/index/docId/177/file/SC-95-11.pdf
 # M Dellnitz, A Hohmann
 # A subdivision algorithm for the computation of unstable manifolds and global attractors
@@ -39,20 +35,15 @@ class Subdivision:
 
         return ret
 
-    def plot(self):
-        print("Plotting started")
-
-        if self.system.dimension == 2:
-            x = []
-            y = []
-            for i in range(len(self.boxes_activeness)):
-                if self.boxes_activeness[i]:
-                    position = self.get_position(i, self.num_boxes_per_dimension)
-                    box_borders = self.get_box_borders(position)
-                    x.append((box_borders[0][0] + box_borders[0][1]) / 2)
-                    y.append((box_borders[1][0] + box_borders[1][1]) / 2)
-            plt.plot(x, y, 'ro', markersize=0.1)
-        print("Plotting ended")
+    def get_points(self):
+        ret = [[] for i in range(self.system.dimension)]
+        for i in range(len(self.boxes_activeness)):
+            if self.boxes_activeness[i]:
+                position = self.get_position(i, self.num_boxes_per_dimension)
+                box_borders = self.get_box_borders(position)
+                for j in range(self.system.dimension):
+                    ret[j].append((box_borders[j][0] + box_borders[j][1]) / 2)
+        return ret
 
     def subdivide(self):
         print("Subdivision started ", self.depth + 1)

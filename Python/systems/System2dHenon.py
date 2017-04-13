@@ -8,6 +8,7 @@ from systems.BaseSystem import BaseSystem
 class System2dHenon(BaseSystem):
     def __init__(self):
         self.dimension = 2
+        self.borders = [[-1.5, 1.5], [-0.5, 0.5]]
 
     def map_point(self, x):
         return [1.0-1.4*x[0]*x[0]+x[1], 0.3 * x[0]]
