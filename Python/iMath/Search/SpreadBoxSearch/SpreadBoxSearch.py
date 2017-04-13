@@ -34,15 +34,15 @@ class SpreadBoxSearch(BaseSearch):
         self.boxes = [Box() for i in range(num_all)]
         for i in range(num_all):
             pv = self.get_point_vector_from_index(i)
-            neighbours = self.get_neighbours(pv)
+            neighbours_indexes = self.get_neighbours_indexes(pv)
             borders = self.get_borders(pv)
-            self.boxes[i].set(neighbours, borders)
+            self.boxes[i].set(neighbours_indexes, borders)
 
         list_to_process = []
         for i in range(len(points)):
             point_vector = self.get_point_vector(points[i])
             point_index = self.get_point_index(point_vector)
-            list_to_process.append([i, self.boxes[point_index]])
+            list_to_process.append([i, point_index])
 
         new_list_to_process = []
         while len(list_to_process) != 0:
@@ -50,7 +50,7 @@ class SpreadBoxSearch(BaseSearch):
                 if not RunFlag.shouldRun:
                     return
 
-                pr[1].insert_point(points[pr[0]], pr[0], new_list_to_process)
+                self.boxes[pr[1]].insert_point(points[pr[0]], pr[0], new_list_to_process, self.boxes)
 
             list_to_process = new_list_to_process
             new_list_to_process = []
@@ -80,18 +80,18 @@ class SpreadBoxSearch(BaseSearch):
 
         return where
 
-    def get_neighbours(self, pv):
+    def get_neighbours_indexes(self, pv):
         tmp = []
         for i in range(self.dimension):
             pv2 = list(pv)
             pv2[i] -= 1
             if pv2[i] >= 0:
                 pv2i = self.get_point_index(pv2)
-                tmp.append(self.boxes[pv2i])
+                tmp.append(pv2i)
             pv2[i] += 2
             if pv2[i] < self.num_points:
                 pv2i = self.get_point_index(pv2)
-                tmp.append(self.boxes[pv2i])
+                tmp.append(pv2i)
         return tmp
 
     def get_point_vector(self, point):

@@ -5,7 +5,7 @@ class Box:
     borders = None
     already_processed_index = None
     active_points = None
-    neighbours = None
+    neighbours_indexes = None
     max_dist_all = sys.float_info.max
     allow_minor_numerical_inaccuracy = 1.0001
 
@@ -13,11 +13,11 @@ class Box:
         self.already_processed_index = {}
         self.active_points = []
 
-    def set(self, neighbours, borders):
-        self.neighbours = neighbours
+    def set(self, neighbours_indexes, borders):
+        self.neighbours_indexes = neighbours_indexes
         self.borders = borders
 
-    def insert_point(self, point, point_index, list_to_process):
+    def insert_point(self, point, point_index, list_to_process, boxes):
         self.already_processed_index[point_index] = True
         min_dist = self.get_min_dist(point)
         max_dist = self.get_max_dist(point)
@@ -26,8 +26,8 @@ class Box:
             self.active_points.append([point_index, min_dist])
             if self.max_dist_all > max_dist:
                 self.max_dist_all = max_dist
-            for neighbour in self.neighbours:
-                if point_index not in neighbour.already_processed_index:
+            for neighbour in self.neighbours_indexes:
+                if point_index not in boxes[neighbour].already_processed_index:
                     list_to_process.append([point_index, neighbour])
 
     def remove_unnecessary(self):
