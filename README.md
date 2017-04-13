@@ -1,4 +1,4 @@
-# PepeSandBox
+# Invariant Sets
 * [Python](https://docs.python.org/3/whatsnew/3.6.html) [3.6.1]
   * Finding [Invariant Sets](https://en.wikipedia.org/wiki/Invariant_(mathematics)) ([attractors](https://en.wikipedia.org/wiki/Attractor)) for:
     * [Henon Map](https://en.wikipedia.org/wiki/H%C3%A9non_map)
