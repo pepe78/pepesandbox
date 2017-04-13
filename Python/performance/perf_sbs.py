@@ -8,7 +8,7 @@ from iMath.Search.KDTree import KDTree
 
 dimension = 2
 borders = [[-1.0, 1.0] for i in range(dimension)]
-num_experiments = 10
+num_experiments = 33
 np = [i for i in range(100,800,200)]
 
 rt1 = [0 for i in range(len(np))]

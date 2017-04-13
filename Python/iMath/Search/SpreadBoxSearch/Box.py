@@ -28,7 +28,9 @@ class Box:
                 self.max_dist_all = max_dist
             for neighbour in self.neighbours_indexes:
                 if point_index not in boxes[neighbour].already_processed_index:
-                    list_to_process.append([point_index, neighbour])
+                    if point_index not in list_to_process:
+                        list_to_process[point_index] = {}
+                    list_to_process[point_index][neighbour] = True
 
     def remove_unnecessary(self):
         new_list = []
