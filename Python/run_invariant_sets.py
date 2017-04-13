@@ -14,11 +14,11 @@ from iPlot.iPlot import iPlot
 #system = System2dBall()
 system = System3dChaoticSaddle()
 
-attractor = Subdivision.do_subdivision(system, system.borders, 8)
+attractor = Subdivision.do_subdivision(system, system.borders, 9)
 
 num_points = 1000
 points = generate_points(num_points, system.borders)
-points = JungeKevrekidis(system, points, 200)
+points = JungeKevrekidis(system, points, 1000)
 
 x_attractor = attractor.get_points()
 x = [[] for i in range(system.dimension)]
