@@ -2,6 +2,7 @@ import sys
 
 from iMath.Search.RunFlag import RunFlag
 
+
 class BaseSearch:
     points = None
 

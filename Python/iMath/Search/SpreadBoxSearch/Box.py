@@ -1,7 +1,5 @@
 import sys
 
-from iMath.Search.BaseSearch import BaseSearch
-
 
 class Box:
     borders = None

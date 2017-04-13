@@ -5,10 +5,12 @@ from iMath.Search.SpreadBoxSearch.SpreadBoxSearch import SpreadBoxSearch
 from iMath.Search.RunFlag import RunFlag
 from iMath.Search.KDTree import KDTree
 
+
 class TMP:
     vp1 = None
     vp2 = None
     ret = None
+
 
 class SearchUsingAllAlgs:
     bs_wins = 0
