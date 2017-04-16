@@ -1,25 +1,89 @@
 import sys
 
 from iMath.LMBFGS import LMBFGS
+from iMath.Search.KDTree import KDTree
 
 
 # https://arxiv.org/abs/1610.04843
 # Oliver Junge, Ioannis G. Kevrekidis
 # On the sighting of unicorns: a variational approach to computing invariant sets in dynamical systems
-def JungeKevrekidis(system, points, max_rounds=sys.maxsize):
-    epsilon = 1.0e-10
-    num_points = len(points)
-    lmbfgs = LMBFGS()
-    evalu = system.evaluate(points)
-    r = 0
-    while True:
-        points, step_size = lmbfgs.make_step(system, points)
-        new_evalu = system.evaluate(points)
-        print("{0} {1} {2} {3}".format(r, step_size, (evalu - new_evalu) / evalu, new_evalu / num_points))
+class JungeKevrekidis:
+    system = None
 
-        if (evalu - new_evalu) / evalu < epsilon or new_evalu / num_points < epsilon or r == max_rounds:
-            break
-        evalu = new_evalu
-        r += 1
+    def __init__(self, system):
+        self.system = system
 
-    return points
+    def go(self, points, max_rounds=sys.maxsize):
+        epsilon = 1.0e-10
+        num_points = len(points)
+        lmbfgs = LMBFGS()
+        evalu = self.evaluate(points)
+        r = 0
+        while True:
+            points, step_size = lmbfgs.make_step(self, points)
+            new_evalu = self.evaluate(points)
+            print("{0} {1} {2} {3}".format(r, step_size, (evalu - new_evalu) / evalu, new_evalu / num_points))
+
+            if (evalu - new_evalu) / evalu < epsilon or new_evalu / num_points < epsilon or r == max_rounds:
+                break
+            evalu = new_evalu
+            r += 1
+
+        return points
+
+    def evaluate(self, x):
+        ret = 0.0
+        num_points = len(x)
+        fx = self.system.map_points(x)
+
+        kdt = KDTree(fx)
+        res = kdt.get_closest_points(x)
+        for i in range(num_points):
+            which = res[i]
+            for j in range(self.system.dimension):
+                dif = x[i][j] - fx[which][j]
+                ret += dif * dif
+
+        kdt = KDTree(x)
+        res = kdt.get_closest_points(fx)
+        for i in range(num_points):
+            which = res[i]
+            for j in range(self.system.dimension):
+                dif = x[which][j] - fx[i][j]
+                ret += dif * dif
+
+        return ret
+
+    def get_derivatives(self, x):
+        num_points = len(x)
+        ret = [[] for i in range(len(x))]
+        for i in range(num_points):
+            ret[i] = [0 for j in range(self.system.dimension)]
+
+        fx = self.system.map_points(x)
+        dx = self.system.get_partials(x)
+
+        kdt = KDTree(fx)
+        res = kdt.get_closest_points(x)
+        for i in range(num_points):
+            which = res[i]
+            for j in range(self.system.dimension):
+                dif = x[i][j] - fx[which][j]
+                ret[i][j] += dif * 2.0
+                for k in range(self.system.dimension):
+                    ret[which][k] -= dif * dx[which][j][k] * 2.0
+
+        kdt = KDTree(x)
+        res = kdt.get_closest_points(fx)
+        for i in range(num_points):
+            which = res[i]
+            for j in range(self.system.dimension):
+                dif = x[which][j] - fx[i][j]
+                ret[which][j] += dif * 2.0
+                for k in range(self.system.dimension):
+                    ret[i][k] -= dif * dx[i][j][k] * 2.0
+
+        return ret
+
+    def move(self, x, dx, step):
+        return self.system.move(x, dx, step)

@@ -43,60 +43,6 @@ class BaseSystem:
     def get_dimension(self):
         return self.dimension
 
-    def evaluate(self, x):
-        ret = 0.0
-        num_points = len(x)
-        fx = self.map_points(x)
-
-        kdt = KDTree(fx)
-        res = kdt.get_closest_points(x)
-        for i in range(num_points):
-            which = res[i]
-            for j in range(self.dimension):
-                dif = x[i][j] - fx[which][j]
-                ret += dif * dif
-
-        kdt = KDTree(x)
-        res = kdt.get_closest_points(fx)
-        for i in range(num_points):
-            which = res[i]
-            for j in range(self.dimension):
-                dif = x[which][j] - fx[i][j]
-                ret += dif * dif
-
-        return ret
-
-    def get_derivatives(self, x):
-        num_points = len(x)
-        ret = [[] for i in range(len(x))]
-        for i in range(num_points):
-            ret[i] = [0 for j in range(self.dimension)]
-
-        fx = self.map_points(x)
-        dx = self.get_partials(x)
-
-        kdt = KDTree(fx)
-        res = kdt.get_closest_points(x)
-        for i in range(num_points):
-            which = res[i]
-            for j in range(self.dimension):
-                dif = x[i][j] - fx[which][j]
-                ret[i][j] += dif * 2.0
-                for k in range(self.dimension):
-                    ret[which][k] -= dif * dx[which][j][k] * 2.0
-
-        kdt = KDTree(x)
-        res = kdt.get_closest_points(fx)
-        for i in range(num_points):
-            which = res[i]
-            for j in range(self.dimension):
-                dif = x[which][j] - fx[i][j]
-                ret[which][j] += dif * 2.0
-                for k in range(self.dimension):
-                    ret[i][k] -= dif * dx[i][j][k] * 2.0
-
-        return ret
-
     def move(self, x, dx, step):
         num_points = len(x)
         ret = [[] for i in range(num_points)]

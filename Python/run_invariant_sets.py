@@ -47,7 +47,8 @@ attractor = Subdivision.do_subdivision(system, system.borders, num_subdivision_s
 x_attractor = attractor.get_points()
 
 points = generate_points(num_jk_points, system.borders)
-final_points = JungeKevrekidis(system, points, num_jk_steps)
+jk = JungeKevrekidis(system)
+final_points = jk.go(points, num_jk_steps)
 
 x_jk = [[] for i in range(system.dimension)]
 for i in range(len(final_points)):
