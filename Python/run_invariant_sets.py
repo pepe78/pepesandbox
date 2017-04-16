@@ -43,7 +43,7 @@ if len(num_jk_steps) == 0:
 else:
     num_jk_steps = int(num_jk_steps)
 
-attractor = Subdivision.do_subdivision(system, system.borders, num_subdivision_step)
+attractor = Subdivision.do_subdivision(system, system.borders, num_subdivision_step, 10)
 x_attractor = attractor.get_points()
 
 points = generate_points(num_jk_points, system.borders)

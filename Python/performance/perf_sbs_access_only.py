@@ -2,7 +2,6 @@ import time
 import matplotlib.pyplot as plt
 
 from iMath.PointsGenerator import generate_points
-from iMath.Search.BaseSearch import BaseSearch
 from iMath.Search.SpreadBoxSearch.SpreadBoxSearch import SpreadBoxSearch
 from iMath.Search.KDTree import KDTree
 

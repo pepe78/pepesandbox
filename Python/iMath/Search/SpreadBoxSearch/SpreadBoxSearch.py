@@ -7,8 +7,8 @@ from iMath.Search.BaseSearch import BaseSearch
 
 # Spread box search is faster than brute search (comparison with every member), but slower
 # than K-D Tree search. Though, access is faster, so in case len(points) << len(points_from),
-# this might be beneficial - though as for JK method len(points)=len(points_from), this
-# is not used
+# this might be beneficial - though as for JK method len(points)=len(points_from), hence this
+# is not used.
 class SpreadBoxSearch(BaseSearch):
     dimension = 0
     num_points = 0

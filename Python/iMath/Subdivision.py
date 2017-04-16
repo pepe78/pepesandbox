@@ -10,10 +10,11 @@ class Subdivision:
     num_all_test_points = -1
     system = None
 
-    def __init__(self, system, depth_start, borders, all_active=True):
+    def __init__(self, system, depth_start, borders, num_test_points_per_dimension, all_active=True):
         self.system = system
         self.depth = depth_start
         self.borders = borders
+        self.num_test_points_per_dimension = num_test_points_per_dimension
         dimension = len(borders)
         self.num_boxes_per_dimension = 1
         for i in range(depth_start):
@@ -27,8 +28,8 @@ class Subdivision:
         self.boxes_activeness = [all_active for i in range(num_boxes)]
 
     @staticmethod
-    def do_subdivision(system, borders, up_to_depth):
-        ret = Subdivision(system, 3, borders)
+    def do_subdivision(system, borders, up_to_depth, num_test_points_per_dimension):
+        ret = Subdivision(system, 3, borders, num_test_points_per_dimension)
 
         while ret.depth != up_to_depth:
             ret = ret.subdivide()
@@ -47,7 +48,7 @@ class Subdivision:
 
     def subdivide(self):
         print("Subdivision started ", self.depth + 1)
-        ret = Subdivision(self.system, self.depth + 1, self.borders, False)
+        ret = Subdivision(self.system, self.depth + 1, self.borders, self.num_test_points_per_dimension, False)
 
         for i in range(len(self.boxes_activeness)):
             if self.boxes_activeness[i]:

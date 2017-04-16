@@ -108,23 +108,3 @@ class BaseSystem:
 
         return ret
 
-    @staticmethod
-    def closest_point(p, pv):
-        which = -1
-        min_dist = sys.float_info.max
-        for i in range(len(pv)):
-            tmp = BaseSystem.get_distance(p, pv[i])
-            if tmp < min_dist:
-                min_dist = tmp
-                which = i
-
-        return which
-
-    @staticmethod
-    def get_distance(p1, p2):
-        ret = 0.0
-        for i in range(len(p1)):
-            tmp = p1[i] - p2[i]
-            ret += tmp * tmp
-
-        return ret
