@@ -1,7 +1,9 @@
 import sys
 
 from iMath.LMBFGS import LMBFGS
+# from iMath.BFGS import BFGS
 from iMath.Search.KDTree import KDTree
+from iMath.Matrix import Matrix
 
 
 # https://arxiv.org/abs/1610.04843
@@ -16,11 +18,13 @@ class JungeKevrekidis:
     def go(self, points, max_rounds=sys.maxsize):
         epsilon = 1.0e-10
         num_points = len(points)
-        lmbfgs = LMBFGS()
+        points = Matrix.convert_to_1d(points)
+        optimizer = LMBFGS()
+        # optimizer = BFGS(self.system.dimension * num_points)
         evalu = self.evaluate(points)
         r = 0
         while True:
-            points, step_size = lmbfgs.make_step(self, points)
+            points, step_size = optimizer.make_step(self, points)
             new_evalu = self.evaluate(points)
             print("{0} {1} {2} {3}".format(r, step_size, (evalu - new_evalu) / evalu, new_evalu / num_points))
 
@@ -29,10 +33,11 @@ class JungeKevrekidis:
             evalu = new_evalu
             r += 1
 
-        return points
+        return Matrix.convert_to_vect(points, self.system.dimension)
 
     def evaluate(self, x):
         ret = 0.0
+        x = Matrix.convert_to_vect(x, self.system.dimension)
         num_points = len(x)
         fx = self.system.map_points(x)
 
@@ -55,6 +60,7 @@ class JungeKevrekidis:
         return ret
 
     def get_derivatives(self, x):
+        x = Matrix.convert_to_vect(x, self.system.dimension)
         num_points = len(x)
         ret = [[] for i in range(len(x))]
         for i in range(num_points):
@@ -83,7 +89,10 @@ class JungeKevrekidis:
                 for k in range(self.system.dimension):
                     ret[i][k] -= dif * dx[i][j][k] * 2.0
 
-        return ret
+        return Matrix.convert_to_1d(ret)
 
     def move(self, x, dx, step):
-        return self.system.move(x, dx, step)
+        x = Matrix.convert_to_vect(x, self.system.dimension)
+        dx = Matrix.convert_to_vect(dx, self.system.dimension)
+        xx = self.system.move(x, dx, step)
+        return Matrix.convert_to_1d(xx)

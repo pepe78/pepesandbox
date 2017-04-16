@@ -12,20 +12,18 @@ class BFGS:
     def __init__(self, dim):
         self.m_iBk = Matrix.get_identity(dim)
 
-    def make_step(self, system, xk):
-        dfxk = system.get_derivatives(xk)
-        m_dfxk = Matrix.convert_to_1d(dfxk)
+    def make_step(self, system, m_xk):
+        m_dfxk = system.get_derivatives(m_xk)
         if self.m_sk is not None:
             m_yk = Matrix.add(m_dfxk, self.m_dfxk, -1.0)
             self.m_iBk = BFGS.compute_new_m_iBk_fast(self.m_iBk, m_yk, self.m_sk)
         m_pk = Matrix.multiply(self.m_iBk, m_dfxk)
-        pk = Matrix.convert_to_vect(m_pk, len(xk[0]))
-        step = Bracketing.best_step(system, xk, pk)
-        xkp1 = system.move(xk, pk, step)
+        step = Bracketing.best_step(system, m_xk, m_pk)
+        m_xkp1 = system.move(m_xk, m_pk, step)
         self.m_sk = Matrix.multiply_number(m_pk, -step)
         self.m_dfxk = m_dfxk
 
-        return xkp1, step
+        return m_xkp1, step
 
     @staticmethod
     def compute_new_m_iBk(m_iBk, m_yk, m_sk):
