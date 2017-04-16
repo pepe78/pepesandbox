@@ -25,7 +25,7 @@ class LMBFGS:
 
         if len(self.m_xk) > 1:
             self.m_sk.append(Matrix.add(self.m_xk[-1], self.m_xk[-2], -1.0))
-            self.m_yk.append(Matrix.add(self.m_xk[-1], self.m_xk[-2], -1.0))
+            self.m_yk.append(Matrix.add(self.m_gk[-1], self.m_gk[-2], -1.0))
             skTyk = Matrix.multiply(Matrix.trans(self.m_yk[-1]), self.m_sk[-1]).vectors[0][0]
             ykTyk = Matrix.multiply(Matrix.trans(self.m_yk[-1]), self.m_yk[-1]).vectors[0][0]
             self.rk.append(1.0/skTyk)
