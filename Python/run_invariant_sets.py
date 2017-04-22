@@ -27,21 +27,19 @@ elif which == 3:
 elif which == 4:
     system = System3dChaoticSaddle()
 
-num_subdivision_step = input("Number of subdivision steps ({0}):".format(system.num_sub_steps))
-if len(num_subdivision_step) == 0:
-    num_subdivision_step = system.num_sub_steps
-else:
-    num_subdivision_step = int(num_subdivision_step)
-num_jk_points = input("Number of points for JK ({0}):".format(system.num_jk_points))
-if len(num_jk_points) == 0:
-    num_jk_points = system.num_jk_points
-else:
-    num_jk_points = int(num_jk_points)
-num_jk_steps = input("Number of JK steps ({0}):".format(system.num_jk_steps))
-if len(num_jk_steps) == 0:
-    num_jk_steps = system.num_jk_steps
-else:
-    num_jk_steps = int(num_jk_steps)
+
+def input_with_default(input_string, default_value):
+    ret = input(input_string.format(default_value))
+    if len(ret) == 0:
+        ret = default_value
+    else:
+        ret = int(ret)
+
+    return ret
+
+num_subdivision_step = input_with_default("Number of subdivision steps ({0}):", system.num_sub_steps)
+num_jk_points = input_with_default("Number of points for JK ({0}):", system.num_jk_points)
+num_jk_steps = input_with_default("Number of JK steps ({0}):", system.num_jk_steps)
 
 attractor = Subdivision.do_subdivision(system, system.borders, num_subdivision_step, 10)
 x_attractor = attractor.get_points()

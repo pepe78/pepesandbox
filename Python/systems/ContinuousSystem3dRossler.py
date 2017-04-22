@@ -1,5 +1,6 @@
 from systems.ContinuousSystem import ContinuousSystem
 
+
 class ContinuousSystem3dRossler(ContinuousSystem):
     def __init__(self):
         self.dimension = 3
