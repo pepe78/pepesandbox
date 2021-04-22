@@ -10,7 +10,7 @@ class iPlot:
         if dimension == 1 or dimension == 2:
             self.ax = fig.gca()
         else:
-            self.ax = fig.gca(projection='3d')
+            self.ax = plt.axes(projection='3d')
             self.ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
             self.ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
             self.ax.w_zaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
